@@ -12,7 +12,9 @@ public class DateUtils {
      * @param date
      * @return
      */
-    public static String dateToStr1(Date date){
-        return simpleDateFormat1.format(date);
+
+    public static String dateToStr(Date date,String pattern) {
+        SimpleDateFormat sdf = new SimpleDateFormat(pattern);
+        return sdf.format(date);
     }
 }

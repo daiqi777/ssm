@@ -1,8 +1,51 @@
 package com.dq.domain;
 
+import com.dq.utils.DateUtils;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Product {
+    private Integer id;
+    private String productNum;
+    private String productName;
+    private String cityName;
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    private Date departureTime;
+    private Float productPrice;
+    private String productDesc;
+    private int productStatus;
+    private String departureTimeStr;
+    private String productStatusStr;
+
+    public String getProductStatusStr() {
+        return productStatus == 0?"关闭":"开启";
+    }
+
+    public String getDepartureTimeStr() {
+        if(departureTime == null) {
+            return "";
+        }else {
+            return DateUtils.dateToStr(departureTime, "yyyy-MM-dd HH:mm:ss");
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Product{" +
+                "id=" + id +
+                ", productNum='" + productNum + '\'' +
+                ", productName='" + productName + '\'' +
+                ", cityName='" + cityName + '\'' +
+                ", departureTime=" + departureTime +
+                ", productPrice=" + productPrice +
+                ", productDesc='" + productDesc + '\'' +
+                ", productStatus=" + productStatus +
+                ", departureTimeStr='" + departureTimeStr + '\'' +
+                ", productStatusStr='" + productStatusStr + '\'' +
+                '}';
+    }
+
     public Integer getId() {
         return id;
     }
@@ -66,13 +109,4 @@ public class Product {
     public void setProductStatus(int productStatus) {
         this.productStatus = productStatus;
     }
-
-    private Integer id;
-    private String productNum;
-    private String productName;
-    private String cityName;
-    private Date departureTime;
-    private Float productPrice;
-    private String productDesc;
-    private int productStatus;
 }
