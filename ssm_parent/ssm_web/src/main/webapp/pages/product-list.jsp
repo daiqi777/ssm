@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -87,7 +88,7 @@
 				<li><a href="${pageContext.request.contextPath}/index.jsp"><i
 						class="fa fa-dashboard"></i> 首页</a></li>
 				<li><a
-					href="${pageContext.request.contextPath}/pages/product-list.jsp">产品管理</a></li>
+					href="/product/list">产品管理</a></li>
 
 				<li class="active">全部产品</li>
 			</ol>
@@ -129,7 +130,7 @@
 								<td>${product.productName}</td>
 								<td>${product.cityName}</td>
 								<td>
-										${product.productStatusStr}
+										${product.departureTimeStr}
 								</td>
 								<td>${product.productPrice}</td>
 								<td>${product.productDesc}</td>
@@ -139,9 +140,9 @@
 								</td>
 								<td class="text-center">
 									<button type="button" class="btn bg-olive btn-xs"
-											onclick='del(${product.id})'>删除</button>
+											onclick='location.href="/product/delete?id=${product.id}"'>删除</button>
 									<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="/product/one?id=${product.id}"'>查看</button>
+											onclick='location.href="/product/one?id=${product.id}"'>修改</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -155,7 +156,7 @@
 							<div class="form-group form-inline">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default" title="新建"
-										onclick='location.href="all-order-manage-edit.html"'>
+										onclick='location.href="/product/add"'>
 										<i class="fa fa-file-o"></i> 新建
 									</button>
 									<button type="button" class="btn btn-default" title="删除"

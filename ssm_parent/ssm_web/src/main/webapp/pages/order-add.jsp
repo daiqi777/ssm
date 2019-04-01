@@ -98,7 +98,7 @@
 
 			<!-- 正文区域 -->
 			<section class="content"> <!--订单信息-->
-			<form action="${pageContext.request.contextPath}/order/save" method="post">
+			<form action="/orders/add" method="post">
 				
 				<div class="panel panel-default">
 					<div class="panel-heading">订单信息</div>
@@ -150,7 +150,7 @@
 							<select class="form-control select2" style="width: 100%"
 								name="product.id">
 								
-								<c:forEach items="${ plist }" var="p">
+								<c:forEach items="${products}" var="p">
 									<option value="${ p.id }" >${ p.productName }</option>
 								</c:forEach>
 								

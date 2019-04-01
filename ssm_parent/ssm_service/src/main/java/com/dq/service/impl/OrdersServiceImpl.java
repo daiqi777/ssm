@@ -11,8 +11,14 @@ import java.util.List;
 public class OrdersServiceImpl implements OrdersService {
     @Autowired
     private OrdersDao ordersDao;
+
     @Override
     public List<Orders> list() {
         return ordersDao.list();
+    }
+
+    @Override
+    public int add(Orders orders) {
+        return ordersDao.add(orders);
     }
 }
