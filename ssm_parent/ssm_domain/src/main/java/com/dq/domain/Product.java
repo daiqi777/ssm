@@ -10,11 +10,12 @@ public class Product {
     private String productNum;
     private String productName;
     private String cityName;
-    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
+    @DateTimeFormat(pattern="yyyy-MM-dd HH:mm")
     private Date departureTime;
     private Float productPrice;
     private String productDesc;
     private int productStatus;
+
     private String departureTimeStr;
     private String productStatusStr;
 
@@ -26,7 +27,7 @@ public class Product {
         if(departureTime == null) {
             return "";
         }else {
-            return DateUtils.dateToStr(departureTime, "yyyy-MM-dd HH:mm:ss");
+            return DateUtils.dateToStr(departureTime, "yyyy-MM-dd HH:mm");
         }
     }
 

@@ -1,31 +1,29 @@
 package com.dq.dao;
 
 import com.dq.domain.Orders;
-import org.apache.ibatis.annotations.Result;
-import org.apache.ibatis.annotations.Results;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
 public interface OrdersDao {
 
-    @Select("select o.id as oid,o.orderNum,o.orderTime,o.peopleCount,o.orderDesc,o.payType,o.orderStatus,p.* from orders o,product p where o.productId = p.id")
-    @Results(value = {
-            @Result(id = true, property = "id", column = "oid"),
-            @Result(property = "orderNum", column = "orderNum"),
-            @Result(property = "orderTime", column = "orderTime"),
-            @Result(property = "peopleCount", column = "peopleCount"),
-            @Result(property = "orderDesc", column = "orderDesc"),
-            @Result(property = "payType", column = "payType"),
-            @Result(property = "orderStatus", column = "orderStatus"),
-            @Result(property = "product.id", column = "id"),
-            @Result(property = "product.productNum", column = "productNum"),
-            @Result(property = "product.productName", column = "productName"),
-            @Result(property = "product.cityName", column = "cityName"),
-            @Result(property = "product.departureTime", column = "departureTime"),
-            @Result(property = "product.productPrice", column = "productPrice"),
-            @Result(property = "product.productDesc", column = "productDesc"),
-            @Result(property = "product.productStatus", column = "productStatus")
-    })
+    @Select("select o.*,p.productname,p.departuretime from orders o,product p where o.productid=p.id")
+    @Results(
+            value = {
+                    @Result(column = "productname",property = "product.productName"),
+                    @Result(column = "departuretime",property = "product.departureTime")
+            }
+    )
     List<Orders> list();
+    @SelectKey(statement = "SELECT orders_seq.nextval from dual",
+            keyProperty ="id",
+            before = true,
+            resultType = Long.class)
+    @Insert("insert into" +
+            " orders(id,orderNum,orderTime,peopleCount,orderDesc,payType,orderStatus,PRODUCTID) " +
+            "values(#{id},#{orderNum},#{orderTime},#{peopleCount},#{orderDesc},#{payType},#{orderStatus},#{product.id})")
+    int add(Orders orders);
+
+
+
 }

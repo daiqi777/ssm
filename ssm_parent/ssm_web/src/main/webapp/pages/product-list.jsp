@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -87,7 +88,7 @@
 				<li><a href="${pageContext.request.contextPath}/index.jsp"><i
 						class="fa fa-dashboard"></i> 首页</a></li>
 				<li><a
-					href="${pageContext.request.contextPath}/pages/product-list.jsp">产品管理</a></li>
+					href="/product/list">产品管理</a></li>
 
 				<li class="active">全部产品</li>
 			</ol>
@@ -122,14 +123,14 @@
 						</tr>
 						</thead>
 						<tbody>
-						<c:forEach items="${productList}" var="product">
+						<c:forEach items="${pageInfo.list}" var="product">
 							<tr>
 								<td><input name="ids" value="${product.id}" type="checkbox"></td>
 								<td>${product.productNum}</td>
 								<td>${product.productName}</td>
 								<td>${product.cityName}</td>
 								<td>
-										${product.productStatusStr}
+										${product.departureTimeStr}
 								</td>
 								<td>${product.productPrice}</td>
 								<td>${product.productDesc}</td>
@@ -139,9 +140,9 @@
 								</td>
 								<td class="text-center">
 									<button type="button" class="btn bg-olive btn-xs"
-											onclick='del(${product.id})'>删除</button>
+											onclick='location.href="/product/delete?id=${product.id}"'>删除</button>
 									<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="/product/one?id=${product.id}"'>查看</button>
+											onclick='location.href="/product/one?id=${product.id}"'>修改</button>
 								</td>
 							</tr>
 						</c:forEach>
@@ -155,7 +156,7 @@
 							<div class="form-group form-inline">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default" title="新建"
-										onclick='location.href="all-order-manage-edit.html"'>
+										onclick='location.href="/product/add"'>
 										<i class="fa fa-file-o"></i> 新建
 									</button>
 									<button type="button" class="btn btn-default" title="删除"
@@ -197,27 +198,28 @@
 				<div class="box-footer">
 					<div class="pull-left">
 						<div class="form-group form-inline">
-							总共2 页，共14 条数据。 每页 <select class="form-control">
-								<option>10</option>
-								<option>15</option>
-								<option>20</option>
-								<option>50</option>
-								<option>80</option>
+							总共${pageInfo.pages}页，共${pageInfo.total} 条数据。 每页
+							<select class="form-control" onchange="submitPageSize(this)">
+								<option selected="selected">5</option>
+								<option  <c:if test="${pageInfo.pageSize==10}"> selected="selected"</c:if>>10</option>
 							</select> 条
 						</div>
 					</div>
+					<script>
+						function submitPageSize(option) {
+							location.href="/product/list?size="+option.value;
+                        }
+					</script>
 
 					<div class="box-tools pull-right">
 						<ul class="pagination">
-							<li><a href="#" aria-label="Previous">首页</a></li>
-							<li><a href="#">上一页</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li><a href="#" aria-label="Next">尾页</a></li>
+							<li><a href="/product/list?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a></li>
+							<li><a href="/product/list?page=${pageInfo.pageNum-1}&size=${pageInfo.pageSize}">上一页</a></li>
+							<c:forEach items="${pageInfo.navigatepageNums}" var="i">
+								<li><a href="/product/list?page=${i}&size=${pageInfo.pageSize}">${i}</a></li>
+							</c:forEach>
+							<li><a href="/product/list?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
+							<li><a href="/product/list?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a></li>
 						</ul>
 					</div>
 

@@ -27,4 +27,5 @@
 
         <!--(5)引入spring配置,达到容器合并-->
         <import resource="spring.xml"/>
+        <import resource="springsecurity.xml"/>
  </beans>

@@ -2,9 +2,10 @@ package com.dq.domain;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Orders {
+public class Orders implements Serializable {
 
     private Long id;
     private String orderNum;
@@ -14,17 +15,15 @@ public class Orders {
     private String orderDesc;
     private Integer payType;
     private Integer orderStatus;
+    private Product product;
 
-    public Long getProductId() {
-        return productId;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProductId(Long productId) {
-        this.productId = productId;
+    public void setProduct(Product product) {
+        this.product = product;
     }
-
-    private Long productId;
-
 
     @Override
     public String toString() {

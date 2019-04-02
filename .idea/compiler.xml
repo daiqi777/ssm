@@ -6,6 +6,7 @@
         <sourceOutputDir name="target/generated-sources/annotations" />
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
+        <module name="spring-security" />
         <module name="ssm_dao" />
         <module name="ssm_domain" />
         <module name="ssm_service" />
@@ -14,6 +15,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="spring-security" target="1.8" />
       <module name="ssm_dao" target="1.8" />
       <module name="ssm_domain" target="1.8" />
       <module name="ssm_parent" target="1.8" />

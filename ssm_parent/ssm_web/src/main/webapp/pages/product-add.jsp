@@ -90,7 +90,7 @@
 			</section>
 			<!-- 内容头部 /-->
 
-			<form action="${pageContext.request.contextPath}/product/add" method="post">
+			<form action="/product/add" method="post">
 				<!-- 正文区域 -->
 				<section class="content"> <!--产品信息-->
 

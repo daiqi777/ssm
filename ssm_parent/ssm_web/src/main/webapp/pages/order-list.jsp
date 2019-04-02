@@ -1,5 +1,8 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib prefix="fmt"    uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%--<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>--%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -150,154 +153,61 @@
 
 									<th class="sorting">订单号</th>
 									<th class="sorting">路线名称</th>
-									<th class="sorting">购买会员</th>
 									<th class="sorting">出发日期</th>
 									<th class="sorting">申请日期</th>
 									<th class="sorting">状态</th>
-									<th class="sorting">审核</th>
-									<th class="sorting">支付</th>
+									<th class="sorting">支付方式</th>
 									<th class="sorting">操作员</th>
-
-									<th class="text-center">操作</th>
+									<th class="sorting">操作</th>
 								</tr>
 							</thead>
 							<tbody>
+							<c:forEach items="${pageInfo.list}" var="o">
 								<tr>
 									<td><input name="ids" type="checkbox"></td>
-									<td>1</td>
-
-									<td>L1608111173</td>
-									<td>温泉之旅·江西婺源+三清山3日跟团游(3钻)</td>
-									<td>Iamzhao</td>
-									<td>2016-09-06</td>
-									<td>2016-09-03</td>
-									<td>已处理</td>
-									<td>已审</td>
-									<td>已付</td>
+									<td>${o.id}</td>
+									<td>${o.orderNum}</td>
+									<td>${o.product.productName}</td>
+									<td>${o.product.departureTimeStr}</td>
+									<td>
+										<fmt:formatDate value="${o.orderTime}" pattern="yyyy-MM-dd HH:mm" />
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${o.orderStatus==0}">
+												未支付
+											</c:when>
+											<c:when test="${o.orderStatus==1}">
+												已支付
+											</c:when>
+											<c:otherwise>
+												异常
+											</c:otherwise>
+										</c:choose>
+									</td>
+									<td>
+										<c:choose>
+											<c:when test="${o.payType==0}">
+												支付宝
+											</c:when>
+											<c:when test="${o.payType==1}">
+												微信
+											</c:when>
+											<c:otherwise>其他</c:otherwise>
+										</c:choose>
+									</td>
 									<td>admin</td>
 
 									<td class="text-center">
 										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="${pageContext.request.contextPath}/pages/order-show.jsp"'>订单</button>
+												onclick='location.href="${pageContext.request.contextPath}/pages/order-show.jsp"'>订单</button>
 										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="${pageContext.request.contextPath}/pages/order-show.jsp"'>查看</button>
+												onclick='location.href="${pageContext.request.contextPath}/pages/order-show.jsp"'>查看</button>
 									</td>
 								</tr>
+							</c:forEach>
 
 
-								<tr>
-									<td><input name="ids" type="checkbox"></td>
-									<td>2</td>
-
-									<td>L1608111173</td>
-									<td>温泉之旅·江西婺源+三清山3日跟团游(3钻)</td>
-									<td>Iamzhao</td>
-									<td>2016-09-06</td>
-									<td>2016-09-03</td>
-									<td>已处理</td>
-									<td>已审</td>
-									<td>已付</td>
-									<td>admin</td>
-
-									<td class="text-center">
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>订单</button>
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>查看</button>
-									</td>
-								</tr>
-
-
-								<tr>
-									<td><input name="ids" type="checkbox"></td>
-									<td>3</td>
-
-									<td>L1608111173</td>
-									<td>温泉之旅·江西婺源+三清山3日跟团游(3钻)</td>
-									<td>Iamzhao</td>
-									<td>2016-09-06</td>
-									<td>2016-09-03</td>
-									<td>已处理</td>
-									<td>已审</td>
-									<td>已付</td>
-									<td>admin</td>
-
-									<td class="text-center">
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>订单</button>
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>查看</button>
-									</td>
-								</tr>
-
-
-								<tr>
-									<td><input name="ids" type="checkbox"></td>
-									<td>4</td>
-
-									<td>L1608111173</td>
-									<td>温泉之旅·江西婺源+三清山3日跟团游(3钻)</td>
-									<td>Iamzhao</td>
-									<td>2016-09-06</td>
-									<td>2016-09-03</td>
-									<td>已处理</td>
-									<td>已审</td>
-									<td>已付</td>
-									<td>admin</td>
-
-									<td class="text-center">
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>订单</button>
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>查看</button>
-									</td>
-								</tr>
-
-
-								<tr>
-									<td><input name="ids" type="checkbox"></td>
-									<td>5</td>
-
-									<td>L1608111173</td>
-									<td>温泉之旅·江西婺源+三清山3日跟团游(3钻)</td>
-									<td>Iamzhao</td>
-									<td>2016-09-06</td>
-									<td>2016-09-03</td>
-									<td>已处理</td>
-									<td>已审</td>
-									<td>已付</td>
-									<td>admin</td>
-
-									<td class="text-center">
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>订单</button>
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>查看</button>
-									</td>
-								</tr>
-
-
-								<tr>
-									<td><input name="ids" type="checkbox"></td>
-									<td>6</td>
-
-									<td>L1608111173</td>
-									<td>温泉之旅·江西婺源+三清山3日跟团游(3钻)</td>
-									<td>Iamzhao</td>
-									<td>2016-09-06</td>
-									<td>2016-09-03</td>
-									<td>已处理</td>
-									<td>已审</td>
-									<td>已付</td>
-									<td>admin</td>
-
-									<td class="text-center">
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>订单</button>
-										<button type="button" class="btn bg-olive btn-xs"
-											onclick='location.href="all-order-manage-edit.html"'>查看</button>
-									</td>
-								</tr>
 
 							</tbody>
 
@@ -309,7 +219,7 @@
 							<div class="form-group form-inline">
 								<div class="btn-group">
 									<button type="button" class="btn btn-default" title="新建"
-										onclick='location.href="all-order-manage-edit.html"'>
+										onclick='location.href="/orders/add"'>
 										<i class="fa fa-file-o"></i> 新建
 									</button>
 									<button type="button" class="btn btn-default" title="删除"
@@ -350,27 +260,31 @@
 				<div class="box-footer">
 					<div class="pull-left">
 						<div class="form-group form-inline">
-							总共2 页，共14 条数据。 每页 <select class="form-control">
-								<option>10</option>
-								<option>15</option>
-								<option>20</option>
-								<option>50</option>
-								<option>80</option>
+							总共${pageInfo.pages}页，共${pageInfo.total}条数据。 每页
+							<select class="form-control" onchange="submitPageSize1(this)">
+								<option selected="selected">4</option>
+								<option <c:if test="${pageInfo.pageSize==8}">selected="selected"</c:if>>8</option>
+
 							</select> 条
 						</div>
 					</div>
+					<script>
+                        function submitPageSize1(option) {
+                            location.href="/orders/list?size="+option.value;
+                        }
+					</script>
 
 					<div class="box-tools pull-right">
 						<ul class="pagination">
-							<li><a href="#" aria-label="Previous">首页</a></li>
-							<li><a href="#">上一页</a></li>
-							<li><a href="#">1</a></li>
-							<li><a href="#">2</a></li>
-							<li><a href="#">3</a></li>
-							<li><a href="#">4</a></li>
-							<li><a href="#">5</a></li>
-							<li><a href="#">下一页</a></li>
-							<li><a href="#" aria-label="Next">尾页</a></li>
+							<li><a href="/orders/list?page=1&size=${pageInfo.pageSize}" aria-label="Previous">首页</a></li>
+							<li><a href="/orders/list?page=${pageInfo.prePage}&size=${pageInfo.pageSize}">上一页</a></li>
+
+							<c:forEach begin="1" end="${pageInfo.pages}" var="i">
+								<li><a href="/orders/list?page=${i}&size=${pageInfo.pageSize}">${i}</a></li>
+							</c:forEach>
+
+							<li><a href="/orders/list?page=${pageInfo.nextPage}&size=${pageInfo.pageSize}">下一页</a></li>
+							<li><a href="/orders/list?page=${pageInfo.pages}&size=${pageInfo.pageSize}" aria-label="Next">尾页</a></li>
 						</ul>
 					</div>
 

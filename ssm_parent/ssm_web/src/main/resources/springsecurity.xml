@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://www.springframework.org/schema/security
+    http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <!--取消拦截的url地址-->
+    <security:http pattern="/css/**" security="none" />
+    <security:http pattern="/img/**" security="none" />
+    <security:http pattern="/plugins/**" security="none" />
+    <security:http pattern="/403.jsp" security="none" />
+    <security:http pattern="/404.jsp" security="none" />
+    <security:http pattern="/500.jsp" security="none" />
+    <security:http pattern="/failer.jsp" security="none" />
+    <security:http pattern="/login.jsp" security="none" />
+
+    <!--
+    auto-config:这个是一个自动配置过滤器(Filter)的属性
+    use-expressions:"是否使用spel表达式"，如果使用表达式：hasRole('ROLE_USER')
+-->
+    <security:http auto-config="true" use-expressions="false">
+    <!-- 配置拦截的请求地址，任何请求地址都必须有ROLE_ADMIN的权限 -->
+
+    <security:intercept-url pattern="/**" access="ROLE_ADMIN" />
+    <!--
+         自定义登录页面配置
+         login-page:登录页面
+         login-processing-url:处理登录的地址
+         default-target-url:登录成功后默认跳转地址
+         authentication-failure-url:登录失败跳转地址
+      -->
+        <security:form-login
+                login-page="/login.jsp"
+                login-processing-url="/login"
+                default-target-url="/index.jsp"
+                always-use-default-target="true"
+                authentication-failure-url="/login.jsp"
+        />
+
+        <!--自定义登出
+            logout-url="/logout" 登出处理地址 security内置地址 <a href="/logout">退出</a>
+            logout-success-url="/login.jsp" 登出成功跳转
+            invalidate-session="true" 登出使得session失效
+
+        -->
+        <security:logout
+            logout-url="/logout"
+            logout-success-url="/login.jsp"
+            invalidate-session="true"
+        />
+
+
+        <!--关闭跨域安全请求-->
+        <security:csrf disabled="true" />
+        
+    </security:http>
+
+    <!--配置授权信息-->
+    <!--<security:authentication-manager>
+        &lt;!&ndash;使用自定义认证器&ndash;&gt;
+        <security:authentication-provider>
+            <security:user-service>
+                <security:user name="dq" password="{noop}dq" authorities="ROLE_ADMIN"/>
+            </security:user-service>
+        </security:authentication-provider>
+    </security:authentication-manager>-->
+
+    <security:authentication-manager>
+        <!--使用自定义认证器-->
+        <security:authentication-provider user-service-ref="sysUserServiceImpl">
+        </security:authentication-provider>
+    </security:authentication-manager>
+</beans>

@@ -2,11 +2,14 @@ package com.dq.controller;
 
 import com.dq.domain.Product;
 import com.dq.service.ProductService;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -21,10 +24,21 @@ public class ProductController {
         return "test";
     }
 
-    @RequestMapping(value = "/list")
+   /* @RequestMapping(value = "/list")
     public String list(Model model){
         List<Product> productList = productService.list();
         model.addAttribute("productList", productList);
+        return "product-list";
+    }*/
+
+    @RequestMapping(value = "/list")
+    public String list(@RequestParam(value = "page",required = false,defaultValue = "1")int page,
+                       @RequestParam(value = "size",required = false,defaultValue = "5")int size,
+                       Model model){
+        //集合查询
+        PageInfo<Product> pageInfo = productService.pageHelperList(page,size);
+        //将数据存入到Model中
+        model.addAttribute("pageInfo",pageInfo);
         return "product-list";
     }
 
@@ -35,7 +49,6 @@ public class ProductController {
 
     @RequestMapping(value = "/add",method = RequestMethod.POST)
     public String add(Product product){
-        System.out.println(product);
         //增加数据
         int acount = productService.add(product);
         return "redirect:/product/list";
@@ -43,7 +56,6 @@ public class ProductController {
 
     @RequestMapping(value = "/update")
     public String update(Product product){
-        System.out.println("返回结果无效列:"+product);
         int count = productService.update(product);
         return "redirect:/product/list";
     }
